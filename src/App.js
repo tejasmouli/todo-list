@@ -7,7 +7,7 @@ function App() {
   const todo = [
     {done: true, note: "Hi Hello", editState: false},
     {done: false, note: "No i cant do it now", editState: false},
-    {done: true, note: "the world is so big that you will need a lot of money to complete one round around it.", editState: false}
+    {done: false, note: "The World is so big that you will need a lot of money to complete one round around it. The World is so big that you will need a lot of money to complete one round around it.", editState: false}
   ]
 
   return (
