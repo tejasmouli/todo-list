@@ -3,7 +3,10 @@ import './Done.css';
 
 const Done = props => {
     const [checked,setChecked] = React.useState(props.checked?true:false);
-    const toggle = () => setChecked(!checked);
+    const toggle = () => {
+        setChecked(!checked);
+        props.markDone();
+    }
   
   return (
       <div className={checked?"box checked":"box"} onClick={toggle}></div>

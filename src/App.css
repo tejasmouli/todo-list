@@ -5,7 +5,12 @@ body {
     background: black;
 }
 
-h1 {
+.bd.row {
+
+    border-bottom: 1px solid grey;
+}
+
+h2 {
     color: yellow;
 }
 
