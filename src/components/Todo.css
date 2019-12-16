@@ -1,0 +1,15 @@
+.container {
+    color: white;
+}
+
+.edit {
+    color: grey;
+}
+
+.material-icons {
+    cursor: context-menu;
+}
+
+.row {
+    padding: 10px;
+}
