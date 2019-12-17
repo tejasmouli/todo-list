@@ -6,8 +6,10 @@ const Todo = props => {
     const toggleEdit = () => {props.toggleEdit(props.item.key)};
 
     const keyPress = event => {
-        if (event.key === 'Enter')
+        if (event.key === 'Enter') {
             toggleEdit();
+            props.addNextItem();
+        }
     }
 
     const onChangeHandler = event => {
@@ -23,7 +25,7 @@ const Todo = props => {
             <div className="col-1 col-xs-1">
                 <div className={props.item.done?"box":"box checked"} onClick={toggleDone}></div>
             </div>
-            <div className="col-9 bl col-xs-9">
+            <div className="col-9 col-xs-9">
                 {props.item.editState
                 ?<input
                     autoFocus

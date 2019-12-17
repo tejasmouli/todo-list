@@ -52,7 +52,7 @@ function App() {
 
   const addTodo = () => {
     if(todos.length === 0)
-      setTodos([{key: 1,done: false, note: "", editState: false}]);
+      setTodos([{key: 1,done: false, note: "", editState: true}]);
     else
       setTodos([...todos, {key: todos.pop().key+1,done: false, note: "", editState: false}]);
   };
@@ -75,6 +75,7 @@ function App() {
           toggleDone={toggleItemDone}
           onNoteChangeHandler={onItemNoteChangeHandler}
           removeThis = {deleteItem}
+          addNextItem = {addTodo}
         />
       )}
     </div>
