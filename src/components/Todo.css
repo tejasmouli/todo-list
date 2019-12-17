@@ -1,16 +1,24 @@
-textarea {
+input {
     resize: none;
     border: 0;
     width: inherit;
-    height: auto;
     padding: 0px;
     background-color: transparent;
     color: white;
     outline: none;
 }
+/* 
+.bl {
+    border: 1px solid white;
+} */
 
 .strick {
     text-decoration: line-through;
+}
+
+.note {
+    min-height: 26px;
+    color: grey;
 }
 
 .material-icons {
@@ -20,3 +28,19 @@ textarea {
 .row {
     padding: 10px;
 }
+
+.box {
+    background: grey;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid grey;
+  }
+  
+  .box.checked {
+    background: transparent;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid grey;
+  }

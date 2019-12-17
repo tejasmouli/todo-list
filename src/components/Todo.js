@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Todo.css';
-import './Done.css';
 
 const Todo = props => {
-    const [todoItem, setTodoItem] = useState(props ? props : {done: false, note: " ", editState: true})
 
-    let rowsOfText = todoItem.note.length/40<1?1:todoItem.note.length/40;
-
-    const toggleEdit = () => {setTodoItem({...todoItem, editState: !todoItem.editState})};
+    const toggleEdit = () => {props.toggleEdit(props.item.key)};
 
     const keyPress = event => {
         if (event.key === 'Enter')
@@ -15,30 +11,32 @@ const Todo = props => {
     }
 
     const onChangeHandler = event => {
-        setTodoItem({...todoItem, note: event.target.value});
-        rowsOfText = todoItem.note.length/40<1?1:todoItem.note.length/40;
+        props.onNoteChangeHandler(props.item.key, event.target.value);
     }
 
-    const toggleDone = () => setTodoItem({...todoItem,done: !todoItem.done}) ;
+    const deleteItem = () => props.removeThis(props.item.key);
+
+    const toggleDone = () => props.toggleDone(props.item.key);
 
     return (
         <div className="row">
             <div className="col-1 col-xs-1">
-                <div className={todoItem.done?"box":"box checked"} onClick={toggleDone}></div>
+                <div className={props.item.done?"box":"box checked"} onClick={toggleDone}></div>
             </div>
-            <div className="col-9 col-xs-9">
-                <textarea
-                    rows={rowsOfText}
+            <div className="col-9 bl col-xs-9">
+                {props.item.editState
+                ?<input
+                    autoFocus
+                    onBlur={toggleEdit}
                     onKeyDown={keyPress}
-                    onClick={toggleEdit}
                     onChange={onChangeHandler}
-                    className={todoItem.done ? "strick":""}
-                    value={todoItem.note} 
-                    readOnly={!todoItem.editState}
+                    className={props.item.done ? "strick":""}
+                    value={props.item.note}
                 />
+                :<div className={props.item.done ? "note strick":"note"} onClick={toggleEdit}>{props.item.note}</div>}
             </div>
             <div className="col-1 col-xs-1">
-                <i className="material-icons">info_outlined</i>
+                <i onClick={deleteItem} className="material-icons">close</i>
             </div>
         </div>
     )
