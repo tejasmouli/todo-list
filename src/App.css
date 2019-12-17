@@ -6,7 +6,6 @@ body {
 }
 
 .bd.row {
-
     border-bottom: 1px solid grey;
 }
 
@@ -18,4 +17,12 @@ button {
     border-radius: 5px;
     width: 50px;
     height: 30px;
+}
+
+input {
+    border: 0;
+    padding: 0px;
+    background-color: transparent;
+    color: white;
+    outline: none;
 }
