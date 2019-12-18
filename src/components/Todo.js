@@ -8,7 +8,7 @@ const Todo = props => {
     const keyPress = event => {
         if (event.key === 'Enter') {
             toggleEdit();
-            props.addNextItem();
+            props.addNextItem(props.item.key);
         }
     }
 

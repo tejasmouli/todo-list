@@ -1,32 +1,26 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import Todo from './components/Todo';
+import TodoList from './components/TodoList';
+import Heading from './components/Heading';
 
 const App = () => {
-  // const [addItem, setAddItem] = useState(false);
-  const data = [
-    {key:1, done: true, note: "Hi Hello", editState: false},
-    {key:2, done: false, note: "No i cant do it now", editState: false},
-    {key:3, done: false, note: "The World is so big that you will need a lot of money to complete one round around it. The World is so big that you will need a lot of money to complete one round around it.", editState: false},
-    {key:4, done: false, note: "No i cant do it now", editState: false}
-  ];
-
-  localStorage.setItem("allTodos", JSON.stringify(data));
   
-  const useStateWithLocalStorage = localStorageKey => {
+  const useStateWithLocalStorage = (localStorageKey, defaultValue) => {
     const [value, setValue] = useState(
-      JSON.parse(localStorage.getItem(localStorageKey)) || ''
+      JSON.parse(localStorage.getItem(localStorageKey)) || JSON.stringify(defaultValue)
     );
-    useEffect(() => {
-      localStorage.setItem(localStorageKey, value);
-    }, [value, localStorageKey]);
-    return [value, setValue];
+
+    const setLocalState = (localStorageKey, newValue) => {
+      localStorage.setItem(localStorageKey, JSON.stringify(newValue));
+      setValue(newValue);
+    };
+    return [value, setLocalState];
   };
 
   const [todos, setTodos] = useStateWithLocalStorage("allTodos");
 
   const deleteItem = key => {
-    setTodos(todos.filter(x => x.key !== key))
+    setTodos("allTodos", todos.filter(x => x.key !== key))
   };
 
   const toggleItemEdit = key => {
@@ -37,7 +31,7 @@ const App = () => {
         item.editState = !item.editState;
       newTodos.push(item);
     }
-    setTodos(newTodos);
+    setTodos("allTodos", newTodos);
   }
 
   const toggleItemDone = key => {
@@ -48,7 +42,7 @@ const App = () => {
         item.done = !item.done;
       newTodos.push(item);
     }
-    setTodos(newTodos);
+    setTodos("allTodos", newTodos);
   }
 
   const onItemNoteChangeHandler = (key, note) => {
@@ -59,37 +53,27 @@ const App = () => {
         item.note = note;
       newTodos.push(item);
     }
-    setTodos(newTodos);
+    setTodos("allTodos", newTodos);
   }
 
-  const addTodo = () => {
+  const addOnEnter = key => {
+    if(key === todos[todos.length - 1].key)
+      setTodos("allTodos", [...todos, {key: todos.pop().key+1,done: false, note: "", editState: false}]);
+  }
+
+  const addTodo = (k = 0) => {
     if(todos.length === 0)
-      setTodos([{key: 1,done: false, note: "", editState: true}]);
+      setTodos("allTodos", [{key: 1,done: false, note: "", editState: true}]);
     else
-      setTodos([...todos, {key: todos.pop().key+1,done: false, note: "", editState: false}]);
+      setTodos("allTodos", [...todos, {key: todos.pop().key+1,done: false, note: "", editState: false}]);
   };
+
+  const todoListProps = {todos, toggleItemDone, deleteItem, toggleItemEdit, addOnEnter, onItemNoteChangeHandler};
 
   return (
     <div className="container">
-      <div className="bd row">
-        <div className="col-10">
-          <h2>Todo</h2>
-        </div>
-        <div className="col-2">
-          <button onClick={addTodo}><i className="material-icons">add</i></button>
-        </div>
-      </div>
-      {todos.map(t => 
-        <Todo
-          key={t.key}
-          item = {t}
-          toggleEdit={toggleItemEdit}
-          toggleDone={toggleItemDone}
-          onNoteChangeHandler={onItemNoteChangeHandler}
-          removeThis = {deleteItem}
-          addNextItem = {addTodo}
-        />
-      )}
+      <Heading addTodo={addTodo}/>
+      <TodoList {...todoListProps} />
     </div>
     );
 }
