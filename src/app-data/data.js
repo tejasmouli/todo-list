@@ -1,4 +1,5 @@
 const loadData = () => {
+
     const data = [
         {key:1, done: true, note: "Hi Hello", editState: false},
         {key:2, done: false, note: "No i cant do it now", editState: false},
