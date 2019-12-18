@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import './App.css';
-import Todo from './components/Todo'
+import Todo from './components/Todo';
 
-function App() {
+const App = () => {
   // const [addItem, setAddItem] = useState(false);
-  const todo = [
+  const data = [
     {key:1, done: true, note: "Hi Hello", editState: false},
     {key:2, done: false, note: "No i cant do it now", editState: false},
     {key:3, done: false, note: "The World is so big that you will need a lot of money to complete one round around it. The World is so big that you will need a lot of money to complete one round around it.", editState: false},
     {key:4, done: false, note: "No i cant do it now", editState: false}
-  ]
+  ];
 
-  const [todos, setTodos] = useState(todo);
+  localStorage.setItem("allTodos", JSON.stringify(data));
+  
+  const useStateWithLocalStorage = localStorageKey => {
+    const [value, setValue] = useState(
+      JSON.parse(localStorage.getItem(localStorageKey)) || ''
+    );
+    useEffect(() => {
+      localStorage.setItem(localStorageKey, value);
+    }, [value, localStorageKey]);
+    return [value, setValue];
+  };
+
+  const [todos, setTodos] = useStateWithLocalStorage("allTodos");
 
   const deleteItem = key => {
     setTodos(todos.filter(x => x.key !== key))
