@@ -7,7 +7,7 @@ const App = () => {
   
   const useStateWithLocalStorage = (localStorageKey, defaultValue) => {
     const [value, setValue] = useState(
-      JSON.parse(localStorage.getItem(localStorageKey)) || JSON.stringify(defaultValue)
+      JSON.parse(localStorage.getItem(localStorageKey)) || defaultValue
     );
 
     const setLocalState = (localStorageKey, newValue) => {
@@ -17,7 +17,7 @@ const App = () => {
     return [value, setLocalState];
   };
 
-  const [todos, setTodos] = useStateWithLocalStorage("allTodos");
+  const [todos, setTodos] = useStateWithLocalStorage("allTodos", []);
 
   const deleteItem = key => {
     setTodos("allTodos", todos.filter(x => x.key !== key))
