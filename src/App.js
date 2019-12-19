@@ -58,14 +58,14 @@ const App = () => {
 
   const addOnEnter = key => {
     if(key === todos[todos.length - 1].key)
-      setTodos("allTodos", [...todos, {key: todos.pop().key+1,done: false, note: "", editState: false}]);
+      setTodos("allTodos", [...todos, {key: todos.pop().key+1,done: false, note: "", editState: true}]);
   }
 
   const addTodo = (k = 0) => {
     if(todos.length === 0)
       setTodos("allTodos", [{key: 1,done: false, note: "", editState: true}]);
     else
-      setTodos("allTodos", [...todos, {key: todos.pop().key+1,done: false, note: "", editState: false}]);
+      setTodos("allTodos", [...todos, {key: todos.pop().key+1,done: false, note: "", editState: true}]);
   };
 
   const todoListProps = {todos, toggleItemDone, deleteItem, toggleItemEdit, addOnEnter, onItemNoteChangeHandler};
